@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form>
+      <p>Firstname : <input type="text" id="firstname"></p>
+      <p>Name : <input type="text" id="name"></p>
+      <p>Age : <input type="number" id="phone"></p>
+      <p>Phone : <input type="tel" id="age"></p>
+      <p>Email : <input type="email" id="email"></p>
+      <p>Student at 42? :<input id="student" type="checkbox"></p>
+      <div>
+          <input id="gender_male" type="radio" name="Gender" value="Male" checked>
+          <label>Male</label>
+          <input id="gender_female" type="radio" name="Gender" value="Female">
+          <label>Female</label>
+          <input id="gender_other" type="radio" name="Gender" value="Female">
+          <label>Other</label>
+      </div>
+      <button onclick="displayFormContents()">Submit</button>
+    </form>
+    <script src="./popup.js" defer></script>
+  </body>
+</html>

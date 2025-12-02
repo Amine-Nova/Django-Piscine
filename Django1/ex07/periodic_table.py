@@ -42,8 +42,6 @@ def get_item(data, delimiter, num):
     var = data.split(delimiter)
     return var[num]
 
-
-
 def file():
     number, name, sign = [], [], []
     f = open("amine.html", 'w')
@@ -71,33 +69,73 @@ def file():
     <div style="display: flex; justify-content: space-between; width: 100%">""" 
     i = 0
     while i < 2:
-        html += f"""<div class="wrapper">
-          <p class="p1">{number[i]}</p>
-          <p class="p2">{sign[i]}</p>
-          <h4>{name[i]}</h4>
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
         </div>""" 
         i += 1
     html += """</div>
     <div class="main2">
     <div style="display: flex">"""
     while i < 4:
-        html += f"""<div class="wrapper">
-          <p class="p1">{number[i]}</p>
-          <p class="p2">{sign[i]}</p>
-          <h4>{name[i]}</h4>
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
         </div>""" 
         i += 1
     html += """</div>
     <div style="display: flex">"""
     while i < 10:
-        html += f"""<div class="wrapper">
-          <p class="p1">{number[i]}</p>
-          <p class="p2">{sign[i]}</p>
-          <h4>{name[i]}</h4>
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
+        </div>\n""" 
+        i += 1
+    html += """</div>
+    </div>
+    <div class="main2">
+    <div style="display: flex">"""
+    while i < 12:
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
         </div>""" 
         i += 1
-    html += """</div>"""
+    html += """</div>
+    <div style="display: flex">"""
+    while i < 18:
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
+        </div>\n""" 
+        i += 1
+    html += """</div>
+    </div>
+    <div style="display: flex">"""
+    while i < 36:
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
+        </div>\n""" 
+        i += 1
+    html += """</div>
+    <div style="display: flex">"""
+    while i < 54:
+        html += f"""  <div class="wrapper">
+            <p class="p1">{number[i]}</p>
+            <p class="p2">{sign[i]}</p>
+            <h4>{name[i]}</h4>
+        </div>\n""" 
+        i += 1
+
     f.write(html)
 
 if __name__ == "__main__":
     file()
+# please remember tomorrow to set the data to not use soo much html

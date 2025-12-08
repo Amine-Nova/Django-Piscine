@@ -1,0 +1,4 @@
+<title>{title}</title>
+<h1>{name} {surname}</h1>
+<p>Age:{age}</p>
+<p>Profession: {profession}</p>

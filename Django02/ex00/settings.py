@@ -1,0 +1,5 @@
+title = "Amine CV"
+name = "Amine"
+surname = "Ben Moussa"
+age = "24"
+profession = "Computer Science Student"

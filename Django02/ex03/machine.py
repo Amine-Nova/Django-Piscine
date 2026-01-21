@@ -16,7 +16,6 @@ class CoffeeMachine:
     def repair(self):
         self.trials = 10
     def serve(self, beverage_class):
-        print(self.trials)
         i = r.randint(0,1)
         if not self.trials:
             raise self.BrokenMachineException()
@@ -29,8 +28,6 @@ class CoffeeMachine:
         
 try:
     i = CoffeeMachine()
-    b = CoffeeMachine()
-    i.trials -= 1
-    print(b.trials)
+    print(i.serve(beverages.HotBeverage))
 except CoffeeMachine.BrokenMachineException as e:
     print(e)

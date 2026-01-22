@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import traceback
-from ex04.elem import Elem, Text
+from elem import Elem, Text
 
 
 def test_text():

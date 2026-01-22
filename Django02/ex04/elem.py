@@ -24,7 +24,10 @@ class Elem:
     """
     Elem will permit us to represent our HTML elements.
     """
-    
+    class ValidationError(Exception):
+        def __init__(self, message):
+            super().__init__(message)
+
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
         """
         __init__() method.
@@ -33,12 +36,11 @@ class Elem:
         """
         self.tag = tag
         self.attr = attr
-        self.content = content
+        self.content = []
+        if content is not None:
+            self.add_content(content)
         self.tag_type = tag_type
-    i = 0
     def __str__(self):
-        def know_depth(result):
-            print("res :\n" + result)
         """
         The __str__() method will permit us to make a plain HTML representation
         of our elements.
@@ -46,31 +48,14 @@ class Elem:
         elements...).
         """
 
-        final = ""
-        space = "  "
-        if (self.content and isinstance(self.content, Elem) == False):
-            if (len(self.content) > 1):
-                final += f"<{self.tag}>\n"
-                for cont in self.content:
-                    check = isinstance(cont, Elem)
-                    if (check):
-                        final += f"{space}" + str(cont) + f"{space}\n"
-                    else:
-                        final += f"{cont if cont else ''}\n"
-                final += f"</{self.tag}>"
-                return final
-        check = isinstance(self.content, Elem)
+        attr = self.__make_attr()
         if self.tag_type == 'double':
-            if (check):
-                result = f"<{self.tag}{self.attr if self.attr else ''}>\n"
-                result += f"{space}" + str(self.content) + "\n"
-                print("two \n" + result)
-                result += f"</{self.tag}>"
-            else:
-                result = f"<{self.tag}{self.attr if self.attr else ''}>{self.content if self.content else ''}</{self.tag}>"
+            content = self.__make_content()
+            result = f"<{self.tag}{attr}>{content}</{self.tag}>"
         elif self.tag_type == 'simple':
-            result = f"<{self.tag}{self.attr if self.attr else ''}>"
-        know_depth(result)
+            result = f"<{self.tag}{attr} />"
+        else:
+            raise self.ValidationError(f"Invalid tag: {self.tag_type}")
         return result
 
     def __make_attr(self):
@@ -91,13 +76,12 @@ class Elem:
             return ''
         result = '\n'
         for elem in self.content:
-            result += [...]
+            result += '  ' + str(elem).replace('\n', '\n  ') + '\n'
         return result
 
     def add_content(self, content):
-        print(self.tag, 'here')
         if not Elem.check_type(content):
-            raise Elem.ValidationError
+            raise Elem.ValidationError("invalid type")
         if type(content) == list:
             self.content += [elem for elem in content if elem != Text('')]
         elif content != Text(''):
@@ -116,4 +100,7 @@ class Elem:
 
 
 if __name__ == '__main__':
-    [...]
+    html_tag = Elem("html", {}, [Elem("head", {}, Elem("title", {}, Text('"Hello ground!"'), "double"), 'double'),
+               Elem("body", {}, [Elem("h1", {}, Text('"Oh no, not again!"')),
+               Elem("img", {"src": "http://i.imgur.com/pfp3T.jpg"}, None, "simple")], "double")], 'double')
+    print(html_tag)

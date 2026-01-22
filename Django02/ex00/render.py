@@ -45,9 +45,9 @@ def render():
         start, end = get_title(file)
         if start != None and end != None:
             title = f"<title>{file[start:end]}</title>"
-        file = file.replace(title, "\n").strip("\n")
-        html += f"""\t{title}
-        
+            title = title.strip("\n")
+        file = file.replace(title, "").strip("\n")
+        html += f"""\t\t{title}
 </head>
   <body>
     {file}

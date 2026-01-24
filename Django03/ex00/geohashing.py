@@ -19,7 +19,6 @@ def geohasing():
             else: 
                 raise(Exception("Too Much Arguments!"))
         prec = args[3]
-        print(prec)
         args.pop(0)
         args.pop(2)
         for arg in args:
@@ -27,8 +26,12 @@ def geohasing():
                 raise(Exception("Not a Number"))
         lat = float(args[0])
         long = float(args[1])
-        geo = geohash(lat, long, "23-1-202649.09871")
-        print(geo)
+        if (lat < -90 or lat > 90):
+            raise(Exception("Latitude out of range"))
+        if (long < -180 or long > 180):
+            raise(Exception("Longitude out of range"))
+        geohash(lat, long, prec.encode())
+        return
     except Exception as e:
         print(e)
 

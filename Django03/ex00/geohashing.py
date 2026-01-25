@@ -3,7 +3,7 @@ from antigravity import geohash
 
 def is_number(str):
     try:
-        number = float(str)
+        float(str)
         return True
     except ValueError:
         return False

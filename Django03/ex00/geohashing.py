@@ -1,6 +1,5 @@
 import sys
 from antigravity import geohash
-import pathlib
 
 def is_number(str):
     try:
@@ -12,7 +11,6 @@ def is_number(str):
 
 def geohasing():
     try:
-        pathlib.Path("geohash.html").unlink(missing_ok=True)
         args = sys.argv
         len_args = len(args)
         if (len_args != 4):

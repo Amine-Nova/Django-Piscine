@@ -8,6 +8,7 @@ def create():
     path = folder / "file"
     path.write_text("Hello It's Amine Here")
     print((path).open('r').read())
+
 if __name__ == '__main__':
     create()
 

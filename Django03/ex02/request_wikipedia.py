@@ -1,6 +1,7 @@
 import requests
 import dewiki
 import json
+import sys
 
 def get_new_page(redirect):
     get_dict = redirect['parse']["wikitext"]['*']
@@ -10,7 +11,6 @@ def get_new_page(redirect):
 
 def get_data(input):
     url = "https://en.wikipedia.org/w/api.php"
-
 
     params = {
         "action": "parse",
@@ -31,26 +31,60 @@ def get_data(input):
     
     return data
 
-def scrap_data(wiki_data):
-    pass
+def scrap_data(wiki_data, end_crt):
+    # parse the {{....}}
+    if (wiki_data != None):
+        start = wiki_data.find("{")
+        end = wiki_data.find(end_crt)
+        if (start > end or start < 0 and end >= 0):
+            wiki_data = wiki_data[:end - 1] + wiki_data[end + 2:]
+        elif (start >= 0 and end >= 0):
+            wiki_data = wiki_data[:start] + wiki_data[end + 2:]
+            wiki_data = wiki_data.strip()
+        elif (start >= 0 and end < 0):
+            wiki_data = wiki_data[:start - 1] + wiki_data[start + 2:]
+        else:
+            pass
+    return wiki_data
+def scrap_data2(wiki_data):
+    # parse the </ref>
+    if (wiki_data != None):
+        start = wiki_data.find("<")
+        end = wiki_data.find(">")
+        if (start > end):
+            wiki_data = wiki_data[:end - 1] + wiki_data[end + 1:]
+            wiki_data = wiki_data.strip()
+        elif (start >= 0 and end >= 0):
+            wiki_data = wiki_data[:start] + wiki_data[end + 1:]
+            wiki_data = wiki_data.strip()
+    return wiki_data
 
 def wiki_search():
-    # data = json.dumps(data)
-    
     try:
-        data = get_data("Micheal Jackson")
-        if (json.dumps(data).find("#REDIRECT") >= 0):
-            print(get_new_page(data))
-            data = get_data(get_new_page(data))
-        elif (json.dumps(data).find("missingtitle") >= 0):
+        args = sys.argv
+        len_args = len(args)
+        if (len_args != 2):
+            raise Exception("The Number of Argument Are not Right!")
+        data = get_data(args[1])
+        if (data.get('parse') != None):
+            if (data['parse']['wikitext']['*'].find("#REDIRECT") >= 0):
+                data = get_data(get_new_page(data))
+        elif (data['error']['code'].find("missingtitle") >= 0):
             raise Exception("Invalid Title")
-        result = dewiki.from_string(data)
+        result = dewiki.from_string(data['parse']['wikitext']['*']).strip()
+        result = scrap_data(result, "}\n\n")
+        while (result != None and result.find("{") >= 0 or result != None and result.find("}") >= 0):
+            result = scrap_data(result, "}")
+        while (result != None and result.find("<") >= 0):
+            result = scrap_data2(result)
+        if (result != None and result.find("See also") >= 0):
+            indice = result.find("See also")
+            result = result[:indice]
     except Exception as e:
         print("Error:", e)
-
-    print(result)
-    result = scrap_data(data)
-        
+        return
+    with open(args[1] + '.wiki', "w") as f:
+        f.write(result.strip())
 
 if __name__ == '__main__':
     wiki_search()

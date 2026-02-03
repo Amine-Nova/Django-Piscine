@@ -1,5 +1,5 @@
 import sys, requests
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
 
 def redirect(subject):
     url = "https://en.wikipedia.org/wiki/"

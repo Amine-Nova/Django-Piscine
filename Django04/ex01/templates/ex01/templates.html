@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %} Ex01: Template engine. {% endblock %} 
+
+{% load static %}
+
+{% block style %}<link rel="stylesheet" href="{% static 'ex01/css/style2.css' %}" />{% endblock %}
+
+{% block content %}
+{% verbatim %}
+<h1>Django Default Template Engine (DTL)</h1>
+
+<div>
+    <h2>1. How the Django Template Engine Works</h2>
+    <p>
+        Django uses the Django Template Language (DTL) to separate presentation (HTML)
+        from business logic (Python code).
+    </p>
+    <ol>
+        <li>A view prepares a <strong>context dictionary</strong>.</li>
+        <li>The view calls <code>render(request, "template.html", context)</code>.</li>
+        <li>The template engine processes template tags and variables.</li>
+        <li>The final HTML is sent to the browser.</li>
+    </ol>
+</div>
+
+<div>
+    <h2>2. Displaying Context Variables</h2>
+    <p>Context variables are displayed using double curly braces:</p>
+<pre>
+{{ username }}
+</pre>
+    <p>Example view context:</p>
+<pre>
+context = {
+    "username": "Amine"
+}
+</pre>
+    <p>This will render as:</p>
+<pre>
+Amine
+</pre>
+</div>
+
+<div>
+    <h2>3. Blocks (Template Inheritance)</h2>
+    <p>
+        Blocks are used with template inheritance to allow child templates
+        to override parts of a base template.
+    </p>
+
+    <h3>Base Template:</h3>
+<pre>
+{% block content %}
+Default content
+{% endblock %}
+</pre>
+
+    <h3>Child Template:</h3>
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+My custom page content
+{% endblock %}
+</pre>
+</div>
+
+<div>
+    <h2>4. Loops (for ... in)</h2>
+    <p>Used to iterate over lists or querysets:</p>
+
+<pre>
+{% for task in tasks %}
+    {{ task }}
+{% endfor %}
+</pre>
+
+    <p>You can also handle empty lists:</p>
+
+<pre>
+{% for task in tasks %}
+    {{ task }}
+{% empty %}
+    No tasks found.
+{% endfor %}
+</pre>
+</div>
+
+<div>
+    <h2>5. If Control Structures</h2>
+    <p>Django templates support conditional rendering:</p>
+
+<pre>
+{% if user.is_authenticated %}
+    Welcome {{ user.username }}
+{% else %}
+    Please login
+{% endif %}
+</pre>
+
+    <p>You can also use:</p>
+    <ul>
+        <li><code>elif</code></li>
+        <li><code>and</code></li>
+        <li><code>or</code></li>
+        <li><code>not</code></li>
+    </ul>
+</div>
+
+<div>
+    <h2>Important Concept</h2>
+    <p>
+        Django templates are intentionally limited. They should only contain
+        presentation logic (loops, conditions, rendering).
+        Business logic must remain in views and models.
+    </p>
+</div>
+{% endverbatim %}
+{% endblock %}

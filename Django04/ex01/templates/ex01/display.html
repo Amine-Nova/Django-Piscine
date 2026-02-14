@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %} Process of Displaying a Static Web Page. {% endblock %}
+{% block content %}
+    <h1>Process of Displaying a Static Web Page</h1>
+
+    <h2>1. Client Request</h2>
+    <p>
+        The process starts when a client (usually a web browser) sends an HTTP request
+        to the server by typing a URL or clicking a link.
+    </p>
+
+    <h2>2. URL Routing</h2>
+    <p>
+        The web server forwards the request to the web framework.
+        The router matches the requested URL to a specific view.
+    </p>
+
+    <h2>3. View Execution</h2>
+    <p>
+        The view handles the request. For a static page, it performs minimal logic
+        and selects the appropriate template to display.
+    </p>
+
+    <h2>4. Template Rendering</h2>
+    <p>
+        The view sends the template to the template engine.
+        Since the page is static, the template is rendered with little or no dynamic data,
+        producing plain HTML.
+    </p>
+
+    <h2>5. Response Creation</h2>
+    <p>
+        The generated HTML is wrapped inside an HTTP response,
+        including headers and a status code.
+    </p>
+
+    <h2>6. Server Response</h2>
+    <p>
+        The server sends the HTTP response back to the client.
+    </p>
+
+    <h2>7. Client Display</h2>
+    <p>
+        The browser receives the response, parses the HTML,
+        and displays the static web page to the user.
+    </p>
+
+    <div>
+        <h3>Summary</h3>
+        Request → View → Template → HTML → Response → Browser Display
+    </div>
+{% endblock %}

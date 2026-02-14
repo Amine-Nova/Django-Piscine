@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Process of Displaying a Static Web Page</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            line-height: 1.7;
+            background: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+
+        p {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .summary {
+            background: #ecf0f1;
+            border-left: 5px solid #16a085;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: #95a5a6;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Process of Displaying a Static Web Page</h1>
+
+    <h2>1. Client Request</h2>
+    <p>
+        The process starts when a client (usually a web browser) sends an HTTP request
+        to the server by typing a URL or clicking a link.
+    </p>
+
+    <h2>2. URL Routing</h2>
+    <p>
+        The web server forwards the request to the web framework.
+        The router matches the requested URL to a specific view.
+    </p>
+
+    <h2>3. View Execution</h2>
+    <p>
+        The view handles the request. For a static page, it performs minimal logic
+        and selects the appropriate template to display.
+    </p>
+
+    <h2>4. Template Rendering</h2>
+    <p>
+        The view sends the template to the template engine.
+        Since the page is static, the template is rendered with little or no dynamic data,
+        producing plain HTML.
+    </p>
+
+    <h2>5. Response Creation</h2>
+    <p>
+        The generated HTML is wrapped inside an HTTP response,
+        including headers and a status code.
+    </p>
+
+    <h2>6. Server Response</h2>
+    <p>
+        The server sends the HTTP response back to the client.
+    </p>
+
+    <h2>7. Client Display</h2>
+    <p>
+        The browser receives the response, parses the HTML,
+        and displays the static web page to the user.
+    </p>
+
+    <div class="summary">
+        <h3>Summary</h3>
+        Request → View → Template → HTML → Response → Browser Display
+    </div>
+
+</body>
+</html>

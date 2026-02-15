@@ -34,6 +34,7 @@ APPEND_SLASH = True
 INSTALLED_APPS = [
     'ex00',
     'ex01',
+    'ex02',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

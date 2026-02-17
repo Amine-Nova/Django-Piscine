@@ -1,11 +1,24 @@
-<div>
-  <form action="save" method="post">
-    {% csrf_token %} {{ form }}
-    <input type="submit" value="Submit" />
-  </form>
-</div>
-<div>
-  {% comment %} {% for data in texts %}
-  <p>{{data.text}} {{data.time}}</p>
-  {% endfor %} {% endcomment %}
-</div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    {% endblock %}
+  </head>
+  <body>
+    <div>
+      <form action="save" method="post">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <div>
+      <h1>History</h1>
+      {% for data in text_time %}
+      <p>{{data}}</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

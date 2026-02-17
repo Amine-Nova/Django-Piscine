@@ -1,0 +1,85 @@
+/* ===== Base Reset ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2f7, #dbeafe);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== Form Card ===== */
+form {
+    background: #ffffff;
+    width: 420px;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 35px;
+}
+
+/* Style Django form inputs */
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border 0.2s ease;
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Submit Button */
+form input[type="submit"] {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+form input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* ===== History Section ===== */
+body > div:last-of-type {
+    width: 420px;
+}
+
+/* History items */
+body > div:last-of-type p {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #2563eb;
+}
+
+h1 {
+    font-size: 25px;
+}

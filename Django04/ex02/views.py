@@ -12,15 +12,15 @@ def saveText(request):
     if (request.method == "POST"):
         data = inputFrom(request.POST)
         if (data.is_valid()):
-            file = open(settings.LOG_FILE, "a+")
-            # text = 'amieneee'
-            file.write("amineeee")
-            file.close
-            print(file)
-            return HttpResponse("file created")
-    else:
-        return HttpResponse("hhhhhhhh")
+            with open(settings.LOG_FILE, "a") as file:
+                file.write(data.cleaned_data["textField"] + ' - ' + str(datetime.now()) + "\n")
+            return redirect("/ex02")
+        else:
+            return HttpResponse("ERROR!")
 
 def renderForm(request):
     form = inputFrom()
-    return render(request, "form.html", {'form' : form})
+    with open(settings.LOG_FILE, "r") as file:
+        readfile = file.read()
+        text_time = readfile.split("\n")
+    return render(request, "form.html", {'form' : form, "text_time" : text_time})

@@ -2,8 +2,8 @@ from django.shortcuts import render
 from .forms import inputFrom
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Text
 from datetime import datetime
+from django.conf import settings
 # Create your views here.
 
 
@@ -12,14 +12,15 @@ def saveText(request):
     if (request.method == "POST"):
         data = inputFrom(request.POST)
         if (data.is_valid()):
-            text = data.cleaned_data['textField']
-            db = Text(text=text, time=datetime.now())
-            db.save()
-            print(db)
-            return HttpResponse("111111")
+            file = open(settings.LOG_FILE, "a+")
+            # text = 'amieneee'
+            file.write("amineeee")
+            file.close
+            print(file)
+            return HttpResponse("file created")
     else:
         return HttpResponse("hhhhhhhh")
 
 def renderForm(request):
     form = inputFrom()
-    return render(request, "form.html", {"form" : form})
+    return render(request, "form.html", {'form' : form})

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from datetime import datetime
 from django.conf import settings
+import os
 # Create your views here.
 
 
@@ -19,6 +20,9 @@ def saveText(request):
             return HttpResponse("ERROR!")
 
 def renderForm(request):
+    file_path = settings.LOG_FILE
+    if not os.path.exists(file_path):
+        open(settings.LOG_FILE, "x")
     form = inputFrom()
     with open(settings.LOG_FILE, "r") as file:
         readfile = file.read()

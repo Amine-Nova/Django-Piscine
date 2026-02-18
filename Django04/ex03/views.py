@@ -9,7 +9,6 @@ def colors_shade(color):
     ff = 'ff'
     increment = 4
     steps = 50
-
     i = 0
     colors = []
     while(i < steps):

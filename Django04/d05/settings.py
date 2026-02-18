@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'ex00',
     'ex01',
     'ex02',
+    'ex03',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 

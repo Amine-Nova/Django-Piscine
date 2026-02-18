@@ -79,7 +79,3 @@ body > div:last-of-type p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     border-left: 4px solid #2563eb;
 }
-
-h1 {
-    font-size: 25px;
-}

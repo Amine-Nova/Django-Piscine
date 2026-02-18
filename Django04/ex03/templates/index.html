@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    {% block style %}
+    <link rel="stylesheet" href="{% static '/css/styles3.css' %}" />
+    {% endblock %}
+  </head>
+  <body>
+      <h1>Colors</h1>
+      <table>
+        <tr>
+          <th style="background-color: black; color: white;">noir</th>
+          <th style="background-color: red; color: white;">rouge</th>
+          <th style="background-color: blue; color: white;">bleu</th>
+          <th style="background-color: green; color: white;">vert</th>
+        </tr>
+        {% for r, g, b, n in colors %}
+        <tr>
+          <td style="background-color: {{n}}"></td>
+          <td style="background-color: {{r}}"></td>
+          <td style="background-color: {{b}}"></td>
+          <td style="background-color: {{g}}"></td>
+        </tr>
+        {% endfor %}
+      </table>
+  </body>
+</html>

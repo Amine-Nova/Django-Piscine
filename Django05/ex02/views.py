@@ -3,7 +3,6 @@ from django.http import HttpResponse
 import datetime
 # Create your views here.
 def create_table2(request):
-    row0 = ["The Phantom Menace", 1, "George Lucas", "Rick McCallum", datetime.date(1999, 5, 19)]
     try:
         connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
         cursor = connect.cursor()
@@ -13,7 +12,7 @@ def create_table2(request):
                         director VARCHAR(32) NOT NULL, \
                         producer VARCHAR(128) NOT NULL, \
                         release_date DATE NOT NULL );")
-    except (Exception, psycopg2.OperationalError ) as e:
+    except ( Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(e)
     finally:
         if connect:
@@ -46,7 +45,7 @@ def insert_data2(request):
                                 row[3],
                                 row[4]
                             ))
-    except (Exception, psycopg2.OperationalError ) as e:
+    except ( Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(e)
     finally:
         if connect:
@@ -54,3 +53,50 @@ def insert_data2(request):
             cursor.close()
             connect.close()
             return HttpResponse('OK!')
+        
+
+def display_data(request):
+    try:
+        html = ""
+        connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM ex02_movies;")
+        rows = cursor.fetchall()
+        print(rows[0])
+
+        html += """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL TABLE</title>
+</head>
+<body>
+    <table>
+        <tr>
+          <th>title</th>
+          <th>episode_nb</th>
+          <th>director</th>
+          <th>producer</th>
+          <th>release_date</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table> 
+</body>
+</html>
+
+"""
+    except ( Exception, psycopg2.OperationalError ) as e:
+        return HttpResponse(e)
+    finally:
+        if connect:
+            connect.commit()
+            cursor.close()
+            connect.close()
+            return HttpResponse(html)

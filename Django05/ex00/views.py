@@ -12,13 +12,14 @@ def create_table0(request):
                         director VARCHAR(32) NOT NULL, \
                         producer VARCHAR(128) NOT NULL, \
                         release_date DATE NOT NULL );")
+        return HttpResponse('OK!')
     except (Exception, psycopg2.OperationalError ) as e:
-        return HttpResponse(e)
+        return HttpResponse(str(e))
     finally:
         if connect:
             connect.commit()
             cursor.close()
             connect.close()
-            return HttpResponse('OK!')
+            
 
 

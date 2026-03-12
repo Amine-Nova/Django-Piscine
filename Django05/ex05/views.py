@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Movies
 import datetime
 # Create your views here.
 
-def insert_data3(request):
+def insert_data5(request):
     try:
         Movies.objects.bulk_create({
             Movies(title='The Phantom Menace', episode_nb=1, director='George Lucas', producer='Rick McCallum', release_date=datetime.date(1999, 5, 19)),
@@ -18,12 +18,13 @@ def insert_data3(request):
         return HttpResponse('OK!')
     except ( Exception ) as e:
         return HttpResponse(str(e))
+
     
 
 ######################################################################################################################
 
 
-def display_data3(request):
+def display_data5(request):
     try:
         html = ""
         rows = Movies.objects.all().values()
@@ -66,8 +67,30 @@ td {{
         html += """</table> 
 </body>
 </html>"""
-          
 
         return HttpResponse(html)
+    except ( Exception ) as e:
+        return HttpResponse(str(e))
+
+def select_todelete5(request):
+    try:
+        movies = Movies.objects.all().values()
+        if (len(movies) == 0):
+            raise Exception("No data available")
+        return render(request, 'ex05/index.html', {"movies" : movies})
+    except ( Exception ) as e:
+        return HttpResponse(str(e))
+    
+def delete_movie5(request):
+    try:
+        if request.method == "POST":
+            movie_id = request.POST.get('movie')
+            if movie_id:
+                Movies.objects.get(pk=movie_id).delete()
+                return redirect("/ex05/remove")
+            else:
+                raise Exception("No data received")
+        else:
+            raise Exception("ERROR!")
     except ( Exception ) as e:
         return HttpResponse(str(e))

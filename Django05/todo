@@ -1,0 +1,13 @@
+so here is the way to set up the button to delete a specific row in the db 
+
+so as i can see in the delete page wich is a httpresponse that include html
+
+so for the button it will have the <a></a> tag so when click it do and action wich 
+
+gonna be another view link that this view url take the <str:id> somthing like that delete/<str:id> 
+
+that i define the id in the <a></a> link anyway when click on delete the view that has the  /delete/<str:id> 
+
+link gonna remove the row with the pk i send and redirect to /delete page and we list the remaining title rows
+
+thank you!!!!!!!!

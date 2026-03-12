@@ -1,0 +1,9 @@
+<form method="post" action="/ex04/delete">
+    {% csrf_token %}
+    <select name="movie">
+        {% for movie in items %}
+            <option value="{{ movie.1 }}">{{ movie.0 }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Remove</button>
+</form>

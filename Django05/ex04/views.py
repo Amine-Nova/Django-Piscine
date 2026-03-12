@@ -1,3 +1,4 @@
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import psycopg2
 import datetime
@@ -96,13 +97,54 @@ td {{
         html += """</table> 
 </body>
 </html>"""
-          
 
         return HttpResponse(html)
     except ( Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(str(e))
     finally:
         if connect:
+            connect.commit()
+            cursor.close()
+            connect.close()
+
+######################################################################################################################
+
+def select_todelete(request):
+    try:
+        connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM ex04_movies;")
+        items = cursor.fetchall()
+        if (len(items) == 0):
+            raise Exception("No data available")
+        return render(request, "ex04/index.html", {"items": items})
+    except ( Exception, psycopg2.OperationalError ) as e:
+        return HttpResponse(str(e))
+    finally:
+        if connect:
+            connect.commit()
+            cursor.close()
+            connect.close()
+
+def delete_movie(request):
+    try:
+        success = False
+        if request.method == "POST":
+            movie_id = request.POST.get("movie")
+            if movie_id:
+                connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
+                cursor = connect.cursor()
+                cursor.execute(f"DELETE FROM ex04_movies WHERE episode_nb={movie_id};")
+                success = True
+                return redirect("/ex04/remove")
+            else:
+                raise Exception("No data received")
+        else:
+            raise Exception("ERROR!")
+    except ( Exception, psycopg2.OperationalError ) as e:
+        return HttpResponse(str(e))
+    finally:
+        if success:
             connect.commit()
             cursor.close()
             connect.close()

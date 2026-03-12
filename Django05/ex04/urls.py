@@ -5,4 +5,6 @@ urlpatterns = [
     path('init', views.create_table4),
     path('populate', views.insert_data4),
     path('display', views.display_data4),
+    path('remove', views.select_todelete),
+    path('delete', views.delete_movie),
 ]

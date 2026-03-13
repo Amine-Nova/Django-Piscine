@@ -2,18 +2,30 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import psycopg2
 import datetime
-# Create your views here.
-
-def create_table4(request):
+ 
+def create_table6(request):
     try:
         connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
         cursor = connect.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS ex04_movies( title VARCHAR(64) NOT NULL UNIQUE, \
+        cursor.execute("CREATE TABLE IF NOT EXISTS ex06_movies ( title VARCHAR(64) NOT NULL UNIQUE, \
                         episode_nb INTEGER PRIMARY KEY, \
                         opening_crawl TEXT, \
                         director VARCHAR(32) NOT NULL, \
                         producer VARCHAR(128) NOT NULL, \
-                        release_date DATE NOT NULL );")
+                        release_date DATE NOT NULL, \
+                        created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+                        updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); \
+                        CREATE OR REPLACE FUNCTION update_changetimestamp_column() \
+                        RETURNS TRIGGER AS $$ \
+                        BEGIN \
+                        NEW.updated = now(); \
+                        NEW.created = OLD.created; \
+                        RETURN NEW; \
+                        END; \
+                        $$ language 'plpgsql'; \
+                        CREATE TRIGGER update_films_changetimestamp BEFORE UPDATE \
+                        ON ex06_movies FOR EACH ROW EXECUTE PROCEDURE \
+                        update_changetimestamp_column();")
         return HttpResponse('OK!')
     except (Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(str(e))
@@ -22,15 +34,14 @@ def create_table4(request):
             connect.commit()
             cursor.close()
             connect.close()
+            
+###############################################################################################################################################
 
-
-######################################################################################################################
-
-def insert_data4(request):
+def insert_data6(request):
     try:
         connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
         cursor = connect.cursor()
-        cursor.execute(""f"INSERT INTO ex04_movies ( title, episode_nb, director, producer, release_date ) \
+        cursor.execute(""f"INSERT INTO ex06_movies ( title, episode_nb, director, producer, release_date ) \
                         VALUES \
                             ('The Phantom Menace', {1}, 'George Lucas', 'Rick McCallum', '{datetime.date(1999, 5, 19)}'), \
                             ('Attack of the Clones', {2}, 'George Lucas', 'Rick McCallum', '{datetime.date(2002, 5, 16)}'), \
@@ -48,14 +59,14 @@ def insert_data4(request):
             cursor.close()
             connect.close()
 
-######################################################################################################################
+###############################################################################################################################################
 
-def display_data4(request):
+def display_data6(request):
     try:
         html = ""
         connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
         cursor = connect.cursor()
-        cursor.execute("SELECT * FROM ex04_movies;")
+        cursor.execute("SELECT * FROM ex06_movies;")
         rows = cursor.fetchall()
         if (len(rows) == 0):
             raise Exception("No data available")
@@ -80,6 +91,8 @@ td {{
           <th>director</th>
           <th>producer</th>
           <th>release_date</th>
+          <th>created</th>
+          <th>updated</th>
         </tr>
         <tr>
            """
@@ -91,6 +104,8 @@ td {{
            <td>{row[3]}</td> \n\
            <td>{row[4]}</td> \n\
            <td>{row[5]}</td> \n\
+           <td>{row[6]}</td> \n\
+           <td>{row[7]}</td> \n\
         </tr> \n\
         <tr> \n           """
         html += """</table> 
@@ -106,18 +121,18 @@ td {{
             cursor.close()
             connect.close()
 
-######################################################################################################################
+###############################################################################################################################################
 
-def select_todelete(request):
+def get_data2up(request):
     try:
         connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
         cursor = connect.cursor()
-        cursor.execute("SELECT * FROM ex04_movies;")
-        items = cursor.fetchall()
-        if (len(items) == 0):
+        cursor.execute("SELECT * FROM ex06_movies;")
+        data = cursor.fetchall()
+        if (len(data) == 0):
             raise Exception("No data available")
-        return render(request, "ex04/index.html", {"items": items})
-    except ( Exception, psycopg2.OperationalError ) as e:
+        return render(request, "ex06/index.html", {"data" : data})
+    except (Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(str(e))
     finally:
         if connect:
@@ -125,24 +140,27 @@ def select_todelete(request):
             cursor.close()
             connect.close()
 
-######################################################################################################################
+###############################################################################################################################################
 
-def delete_movie(request):
+def update_data(request):
     try:
         success = False
         if request.method == "POST":
-            movie_id = request.POST.get("movie")
-            if movie_id:
+            movie = request.POST.get("movie")
+            update = request.POST.get("opening_crawl")
+            if movie and update:
                 connect = psycopg2.connect(dbname='djangotraining', user="djangouser", password="secret", host="localhost", port="5432")
                 cursor = connect.cursor()
-                cursor.execute(f"DELETE FROM ex04_movies WHERE episode_nb={movie_id};")
+                cursor.execute(f"UPDATE ex06_movies \
+                                SET opening_crawl = '{update}' \
+                                WHERE title = '{movie}'")
                 success = True
-                return redirect("/ex04/remove")
+                return redirect("/ex06/update")
             else:
                 raise Exception("No data received")
         else:
             raise Exception("ERROR!")
-    except ( Exception, psycopg2.OperationalError ) as e:
+    except (Exception, psycopg2.OperationalError ) as e:
         return HttpResponse(str(e))
     finally:
         if success:

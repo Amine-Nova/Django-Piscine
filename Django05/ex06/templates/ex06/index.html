@@ -1,0 +1,10 @@
+<form method="post" action="/ex06/change">
+    {% csrf_token %}
+    <select name="movie">
+        {% for movie in data %}
+            <option value="{{ movie.0 }}">{{ movie.0 }}</option>
+        {% endfor %}
+        <input type="text" name="opening_crawl">
+    </select>
+    <button type="submit">Update</button>
+</form>

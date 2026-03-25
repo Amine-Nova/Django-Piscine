@@ -153,11 +153,11 @@ def update_data(request):
                 cursor = connect.cursor()
                 cursor.execute(f"UPDATE ex06_movies \
                                 SET opening_crawl = '{update}' \
-                                WHERE title = '{movie}'")
+                                WHERE title = '{movie}';")
                 success = True
                 return redirect("/ex06/update")
             else:
-                raise Exception("No data received")
+                raise Exception("No data received!")
         else:
             raise Exception("ERROR!")
     except (Exception, psycopg2.OperationalError ) as e:

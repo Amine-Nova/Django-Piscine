@@ -1,0 +1,60 @@
+<nav class="bg-primary-subtle navbar sticky-top bg-body-tertiary bg-nav">
+  <div class="row align-items-center p-2 m-2 container-fluid">
+    <div class="col-auto">
+      <a href="/" class="text-uppercase fs-2 text-color font-monospace p-0 m-0">
+        Life Pro Tips
+      </a>
+    </div>
+    {% if request.session.logged_in %}
+     <div class="col d-flex justify-content-center align-items-center gap-2 flex-wrap">
+      <p
+        class="text-uppercase text-color text-center font-monospace fs-5 p-0 m-0"
+      >
+        Hello {{request.session.username}}
+        {% comment %} {% for perm in perms %} {% endcomment %}
+        {% comment %} {% endfor %} {% endcomment %}
+      </p>
+      {% if perms|length > 0 %}
+          <p class="text-uppercase text-color text-center font-monospace fs-5 p-0 m-0">[</p>
+        {% for perm in perms  %}
+          <p class="text-uppercase text-color text-center font-monospace fs-6 p-0 m-0">{{perm.name}} {% if not forloop.last %} | {% endif %} </p>
+        {% endfor %}
+          <p class="text-uppercase text-color text-center font-monospace fs-5 p-0 m-0">]</p>
+      {% endif %}
+    </div>
+    <div class="col-auto">
+      <a
+      href="/logout"
+      class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+      >Logout</a
+      >
+      
+    </div>
+    {% else %}
+    <div class="col">
+      <p
+        class="text-uppercase text-color text-center font-monospace fs-5 p-0 m-0"
+        id="name"
+      >
+        Hello {{name}}
+      </p>
+    </div>
+    <div class="col-auto">
+      <a
+        href="/login"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+        >Login</a
+      >
+      
+    </div>
+    <div class="col-auto">
+      <a
+        href="/register"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+      >
+        Register
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

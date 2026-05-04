@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* .container-fluid {
+    margin: 0;
+    padding: 0;
+    background-color: aquamarine;
+    width: 100%;
+} */
+
+.bg-nav
+{
+    background-color: #27374D;
+}
+.bg-main
+{
+    background-color: #526D82;
+}
+.bg-more
+{
+    background-color: #9DB2BF;
+}
+.text-color
+{
+    color: #DDE6ED;
+}
+
+li {
+    color: red;
+}

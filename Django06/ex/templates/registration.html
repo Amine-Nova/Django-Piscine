@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}Register{% endblock %}</title>
+  </head>
+  <body class="bg-more">
+    {% include "nav.html" %}
+    <div class="row bg-primary-subtle p-2 m-2">
+      <div class="col">
+        <h1 class="bg-primary-subtle text-uppercase font-oswald">Register</h1>
+      </div>
+    </div>
+    <div class="row bg-primary-subtle p-2 m-2">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="d-grid gap-3">
+          <div class="">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {{ form.username.errors }}
+          </div>
+          <div>
+            {{ form.password.label_tag }}
+            {{ form.password }} 
+            {{ form.password.errors }}
+          </div>
+          <div>
+            {{ form.confirm_password.label_tag }} 
+            {{ form.confirm_password }} 
+            {{ form.confirm_password.errors }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-5">Submit</button>
+      </form>
+    </div>
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>

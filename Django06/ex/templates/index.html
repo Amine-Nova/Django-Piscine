@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body class="bg-more">
+    {% include "nav.html" %}
+    <div class="row bg-primary-subtle p-2 m-2">
+      <h1 class="bg-primary-subtle text-uppercase font-oswald">HomePage</h1>
+      {% if request.session.logged_in %}
+      <form method="POST" class="mt-2">
+        {% csrf_token %}
+        <div class="my-3">
+          {{ form.content.label_tag }}
+          {{ form.content }} 
+          {{ form.content.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div class="mt-5">
+        <h1 class="bg-primary-subtle text-uppercase font-oswald">Tips</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">content</th>
+              <th scope="col">author</th>
+              <th scope="col">upvote</th>
+              <th scope="col">downvote</th>
+              <th scope="col">date</th>
+              <th scope="col">-</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tip in tips %}
+            <tr>
+              <td>{{tip.content}}</td>
+              <td>{{tip.author}}</td>
+              <td class="m-2">
+                {{tip.upvote}}
+                <form method="POST" action="{% url 'upvote' tip.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success btn-sm">+1</button>
+                </form>
+              </td>
+              <td>
+                {{tip.downvote}}
+                <form method="POST" action="{% url 'downvote' tip.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm">-1</button>
+                </form>
+              </td>
+              <td>{{tip.date}}</td>
+              <td>
+                <form method="POST" action="{% url 'delete_tip' tip.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+    </div>
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>

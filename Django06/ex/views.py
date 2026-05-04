@@ -48,8 +48,8 @@ def add_permissions(user: User):
 
 def home(request):
     tips = Tip.objects.all()
-    user = User.objects.get(username=request.session['username'])
     if request.session.get('logged_in', False):
+        user = User.objects.get(username=request.session['username'])
         count_points()
         print(len(user.perm.values()))
         add_permissions(User.objects.get(username=request.session['username']))
@@ -63,8 +63,10 @@ def home(request):
         return render(request, "index.html", {'form': form, 'tips': tips, 'perms': user.perm.values()})
     name = random.choice(settings.RANDOM_NAMES)
     form = forms.Tips()
-    print(len(user.perm.values()))
-    return render(request, "index.html", {'name' : name, 'form': form, 'tips': tips, 'perms': user.perm.values()})
+    if request.session.get('logged_in', False):
+        return render(request, "index.html", {'name' : name, 'form': form, 'tips': tips, 'perms': user.perm.values()})
+    else:
+        return render(request, "index.html", {'name' : name, 'form': form, 'tips': tips})
 
 def login_page(request):
     if request.session.get('logged_in', False):

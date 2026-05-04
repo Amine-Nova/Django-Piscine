@@ -1,0 +1,70 @@
+CREATE DATABASE :
+{
+    CREATE DATABASE <db-name>
+}
+
+USE DATABASE : 
+{
+    USE <db-name>
+}
+
+MAKE CHANGES OR SETUP SOMETHING IN DATABASE :
+{
+    ALTER DATABASE <db-name> .....
+}
+
+DROP DATABASE :
+{
+    DROP DATABASE <db-name>
+}
+
+DELETE ROWS FROM DATABASE :
+{
+    DELETE FROM <table-name>;
+    DELETE FROM <table-name> WHERE <condition>;
+}
+
+CREATE TABLE :
+{
+    CREATE TABLE IF NOT EXISTS <table-name> ( <fields-name> <field-type> ); 
+}
+
+INSERT INTO TABLE :
+{
+    INSERT INTO <table-name>
+}
+
+DELETE TABLE :
+{
+    DROP TABLE <table-name>
+}
+
+DELETE ALL DB TABLES :
+{    
+    DO $$
+    DECLARE
+    r RECORD;
+    BEGIN
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+    EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
+    END LOOP;
+    END $$;
+}
+
+COPY FILES TO DB:
+{
+    COPY <table-name> ( <fields-name>, .... ) FROM <file-name> OPTIONS .....
+}
+
+
+field-types:
+{
+    VARCHAR,
+    INTEGER,
+    TEXT,
+    DATE,
+    TIMESTAMP,
+    INT,
+    BIGINT,
+    REAL,
+}

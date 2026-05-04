@@ -1,0 +1,13 @@
+<form method="post" action="/ex10/">
+    {% csrf_token %}
+    <p style="margin-bottom: 3;">Movies minimum release date</p><input type="date" name="minimum" required>
+    <p style="margin-bottom: 3;">Movies maximum release date</p><input type="date" name="maximum" required>
+    <p style="margin-bottom: 3;">Planet diameter greater than</p><input type="number" name="diameter" required>
+    <p style="margin-bottom: 3;">Character gender</p>
+    <select name="genders" required>
+        {% for gender in genders %}
+            <option value="{{ gender.0 }}">{{ gender.0 }}</option>
+        {% endfor %}
+    </select></br>
+    <button style="margin-top: 20px;" type="submit">Submit</button>
+</form>

@@ -1,0 +1,18 @@
+ <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+
+    {% get_current_language as LANGUAGE_CODE %}
+
+    {% if LANGUAGE_CODE == 'en' %}
+        <input type="hidden" name="language" value="fr">
+        <button type="submit" class="text-white" style="all:unset; cursor:pointer;">
+            Français
+        </button>
+    {% else %}
+        <input type="hidden" name="language" value="en">
+        <button type="submit" class="text-white" style="all:unset; cursor:pointer;">
+            English
+        </button>
+    {% endif %}
+</form>

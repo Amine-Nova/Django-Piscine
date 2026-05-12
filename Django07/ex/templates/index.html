@@ -1,0 +1,93 @@
+{% load static %}
+{% load i18n %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}{% trans 'Articles' %}{% endblock %}</title>
+  </head>
+  <body class="bg-more">
+    <div class="row bg-primary-subtle p-2 m-2">
+      <div class="mt-5">
+        <div class="row align-items-center">
+          <div class="col">
+
+        <div class="d-flex gap-3 align-items-center">
+          <h1 class="bg-primary-subtle text-uppercase font-oswald">
+            {% trans 'Articles' %}
+          </h1>
+          <p class="mb-0 fs-3 text-secondary align-items-center">{% trans 'Share your writings' %}</p>
+        </div>
+          </div>
+          <div class="col d-flex justify-content-end">
+             <form
+              action="{% url 'set_language' %}"
+              method="post"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}" />
+              {% get_current_language as LANGUAGE_CODE %} 
+              {% if LANGUAGE_CODE == 'en' %}
+              <input type="hidden" name="language" value="fr" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Passer en français
+              </button>
+              {% else %}
+              <input type="hidden" name="language" value="en" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Switch to english
+              </button>
+              {% endif %}
+            </form>
+          </div>
+          </div>
+
+        {% include "row.html" %}
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th scope="col">{% trans 'Title' %}</th>
+              <th scope="col">{% trans 'Synopsis' %}</th>
+              <th scope="col">{% trans 'Writer' %}</th>
+              <th scope="col">{% trans 'Created' %}</th>
+              <th scope="col">{% trans 'When' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for article in object_list %}
+            <tr>
+              <td>{{article.title}}</td>
+              <td>{{article.synopsis|truncatechars:20}}</td>
+              <td>{{article.author}}</td>
+              <td>{{article.created}}</td>
+              <td>{{article.created|timesince}}</td>
+              <td>
+              <a
+                href="{% url 'articles:detail' article.id %}"
+                class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+                ><button type="submit" class="btn btn-info text-white">
+                  {% trans 'Read' %}
+                </button></a
+              >
+            </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="/static/js/script.js" defer></script>
+  </body>
+</html>

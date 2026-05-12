@@ -1,0 +1,64 @@
+{% load static %} {% load i18n %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}{% trans 'Publish' %}{% endblock %}</title>
+  </head>
+  <body class="bg-more">
+    <div class="row bg-primary-subtle p-2 m-2 align-items-center">
+      <div class="mt-5">
+        <div class="row align-items-center">
+          <div class="col">
+            <h1 class="bg-primary-subtle text-uppercase font-oswald">
+              {% trans 'Publish' %}
+            </h1>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <form
+              action="{% url 'set_language' %}"
+              method="post"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}" />
+              {% get_current_language as LANGUAGE_CODE %} 
+              {% if LANGUAGE_CODE == 'en' %}
+              <input type="hidden" name="language" value="fr" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Passer en français
+              </button>
+              {% else %}
+              <input type="hidden" name="language" value="en" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Switch to english
+              </button>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+        {% include "row.html" %}
+        <div class="row bg-primary-subtle p-2 m-2">
+          <form method="post" class="mt-3">
+            {% csrf_token %}
+            <div class="">{{ form.as_p }}</div>
+            <button type="submit" class="btn btn-primary mt-5">
+              {% trans 'Submit' %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

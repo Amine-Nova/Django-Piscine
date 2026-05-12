@@ -1,0 +1,107 @@
+<nav class="bg-primary-subtle navbar sticky-top bg-body-tertiary bg-nav p-4">
+  <div class="row gx-7 align-items-center">
+    <div class="col-auto">
+      <p
+        class="text-uppercase fs-2 text-color font-monospace p-0 m-0 text-decoration-underline"
+      >
+        arus
+      </p>
+    </div>
+    <div class="col-auto">
+      {% if user.is_authenticated %}
+      <p class="text-uppercase fs-4 text-color font-monospace p-0 m-0">
+        Logged as {{user.username}}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row gx-7 align-items-center">
+    <div class="col-auto space-between">
+      <div class="row gx-7">
+        <div class="col">
+          <a
+            href="{% url 'articles:home' %}"
+            class="text-uppercase text-color font-monospace fs-5 p-0 m-0"
+            >Home</a
+          >
+        </div>
+        <div class="col">
+          <a
+            href="{% url 'articles:articles_list' %}"
+            class="text-uppercase text-color font-monospace fs-5 p-0 m-0"
+            >Articles</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if user.is_authenticated %}
+
+  <div class="row gx-7">
+    <div class="col">
+      <a
+        href="{% url 'articles:favourite_list' %}"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+        >Favourite</a
+      >
+    </div>
+    <div class="col">
+      <a
+        href="{% url 'articles:publications_list' %}"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+        >Publications</a
+      >
+    </div>
+    <div class="col-auto">
+      <a
+        href="{% url 'articles:logout' %}"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+        >Logout</a
+      >
+    </div>
+  </div>
+  {% else %}
+  <div class="row align-items-center ">
+    <div class="col">
+      <div class="dropdown">
+        <button
+          class="btn btn-light btn-sm dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Login
+        </button>
+        <div class="dropdown-menu dropdown-menu-end p-3 bg-drop" style="min-width: 250px">
+          <form method="post" action="{% url 'articles:login_form' %}">
+            {% csrf_token %}
+            <div class="mb-2">
+              <label class="form-label text-white">
+                {{ login_form.username.label }}
+              </label>
+              {{ login_form.username }}
+            </div>
+            <div class="mb-2">
+              <label class="form-label text-white">
+                {{ login_form.password.label }}
+              </label>
+              {{ login_form.password }}
+            </div>
+            <button type="submit" class="btn btn-info btn-sm w-100">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <a
+        href="{% url 'articles:register_form' %}"
+        class="text-uppercase text-color font-monospace fs-6 p-0 m-0"
+        >Register</a
+      >
+    </div>
+  </div>
+  {% endif %}
+</nav>

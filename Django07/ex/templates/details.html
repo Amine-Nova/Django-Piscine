@@ -1,0 +1,93 @@
+{% load static %} {% load i18n %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>{% block title %}Details{% endblock %}</title>
+  </head>
+  <body class="bg-more">
+    <div class="row bg-primary-subtle p-2 m-2">
+      <div class="mt-5">
+        <div class="row align-items-center">
+          <div class="col">
+            <h1 class="bg-primary-subtle text-uppercase font-oswald">
+              Details
+            </h1>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <form
+              action="{% url 'set_language' %}"
+              method="post"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}" />
+              {% get_current_language as LANGUAGE_CODE %} 
+              {% if LANGUAGE_CODE == 'en' %}
+              <input type="hidden" name="language" value="fr" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Passer en français
+              </button>
+              {% else %}
+              <input type="hidden" name="language" value="en" />
+              <button
+                type="submit"
+                class="text-primary text-decoration-underline"
+                style="all: unset; cursor: pointer"
+              >
+                Switch to english
+              </button>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+
+        {% include "row.html" %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">{% trans 'Title' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Created' %}</th>
+              <th scope="col">{% trans 'Synopsis' %}</th>
+              <th scope="col">{% trans 'Content' %}</th>
+              {% if user.is_authenticated %}
+              <th scope="col">{% trans 'Add_fav' %}</th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{object_list.id}}</td>
+              <td>{{object_list.title}}</td>
+              <td>{{object_list.author}}</td>
+              <td>{{object_list.created}}</td>
+              <td>{{object_list.synopsis}}</td>
+              <td>{{object_list.content}}</td>
+              {% if user.is_authenticated %}
+              <td>
+                <form
+                  method="post"
+                  action="{% url 'articles:favourite_add' object_list.id %}"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning btn-sm">
+                    {% trans 'Add to Favourite' %}
+                  </button>
+                </form>
+              </td>
+              {% endif %}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+{% load static %} {% load bootstrap5 %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% bootstrap_css %} {% bootstrap_javascript %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="{% static 'chat/css/styles.css' %}" />
+  </head>
+  <body class="bg-more">
+    <div class="container mt-5" style="max-width: 700px">
+      <div class="d-flex align-items-center gap-2 justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <span class="fs-5 text-muted"># </span>
+          <h5 id="room_name" class="mb-0 fw-semibold">{{ room_name }}</h5>
+        </div>
+        <h5 id="username" class="mb-0 fw-semibold d-flex justify-content-end">{{ user.username }}</h5>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-9">
+          <div
+            class="border rounded bg-white p-3 mb-3"
+            style="height: 420px; overflow-y: auto"
+            id="messages"
+          >
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                min-height: 88%;
+              "
+            >
+              {% for message in messages reversed %} 
+                {% if message.user.username == user.username %}
+                  <div class="d-flex justify-content-end mb-3">
+                    <div
+                      class="bg-info text-white rounded-3 px-3 py-2"
+                      style="max-width: 70%"
+                    >
+                      <p class="mb-0">{{ message.text }}</p>
+                      <span class="small opacity-75"
+                        >{{ message.user.username }}</span
+                      >
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="d-flex justify-content-start mb-3">
+                    <div
+                      class="bg-primary text-white rounded-3 px-3 py-2"
+                      style="max-width: 70%"
+                    >
+                      <p class="mb-0">{{ message.text }}</p>
+                      <span class="small opacity-75"
+                        >{{ message.user.username }}</span
+                      >
+                    </div>
+                  </div>
+                {% endif %} 
+              {% endfor %}
+            </div>
+          </div>
+          <div class="input-group">
+        <input
+          id="message-input"
+          type="text"
+          name="content"
+          class="form-control"
+          placeholder="Type a message..."
+          autocomplete="off"
+          required
+        />
+        <button id="btn-send" class="btn btn-primary ms-2" type="submit">
+          Send
+        </button>
+      </div>
+        </div>
+
+        <div class="col-3 border rounded bg-white text-center" style="height: 420px; overflow-y: auto">
+            <div class="border-bottom p-2 fw-bold w-100">Online Users</div>
+            <div id="connected" class="row p-1 d-flex justify-content-center align-items-center">
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'chat/js/script.js' %}"></script>
+  </body>
+</html>

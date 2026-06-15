@@ -1,0 +1,42 @@
+.bg-more {
+  background-color: #849dff;
+  min-height: 100vh;
+}
+
+h3 {
+  font-weight: 500;
+}
+
+.list-group-item a {
+  font-size: 20px;
+}
+.list-group {
+  width: 30%;
+  border-radius: 8px;
+  color: #444;
+}
+
+.list-group-item {
+  background-color: rgb(255, 255, 255);
+}
+
+.list-group-item a:hover {
+  color: #0d6efd;
+}
+
+.list-group-item:hover {
+  background-color: rgb(220, 241, 252);
+}
+
+.list-group-item:hover .badge {
+  background-color: #0a58ca !important;
+}
+
+#messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}

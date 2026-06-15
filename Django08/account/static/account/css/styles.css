@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Inter:wght@400;500&display=swap');
+
+.bg-more {
+  background-color: #849dff;
+  min-height: 100vh;
+}
+
+/* Logged in view */
+.welcome-heading {
+  background-color: #cfe2ff;
+  padding: 2rem 1rem;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+/* Login form card */
+.login-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-card .btn-primary {
+  width: 100%;
+  padding: 0.6rem;
+  font-weight: 500;
+}
+
+/* Form fields */
+.login-card input {
+  border-radius: 8px;
+}
+
+.login-card label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #444;
+}

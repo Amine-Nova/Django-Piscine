@@ -1,0 +1,47 @@
+{% load static %} {% load bootstrap5 %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% bootstrap_css %} {% bootstrap_javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Account</title>
+    <link rel="stylesheet" href="{% static 'account/css/styles.css' %}" />
+  </head>
+  <body class="bg-more">
+    {% if user.is_authenticated %}
+    {% csrf_token %}
+    <div
+      class="welcome-heading text-uppercase text-center row"
+      style="position: relative"
+    >
+      <div class="col-12">
+        <h1 class="mb-4">Hello World</h1>
+        <p class="fs-3 text-center welcome-user mt-3">Logged as {{ user.username }}</p>
+        <button
+          id="logout"
+          class="btn btn-light m-3 px-4 py-2 fs-5 z-3"
+          style="position: absolute; top: 0; right: 0"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+    {% else %}
+    {% csrf_token %}
+    <div
+      class="main d-flex justify-content-center align-items-center min-vh-100"
+    >
+      <div class="login-card">
+        <h4 class="text-uppercase">Welcome Back</h4>
+        <p class="subtitle">Sign in to continue</p>
+        <hr class="divider" />
+         {% bootstrap_form form %}
+        <span class="text-danger login-error d-none"></span>
+        <button id="login" class="btn btn-primary mt-3">Sign In</button>
+      </div>
+    </div>
+    {% endif %}
+    <script defer src="{% static "account/js/script.js" %}"></script>
+  </body>
+</html>

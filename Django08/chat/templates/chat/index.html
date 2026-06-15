@@ -1,0 +1,31 @@
+{% load static %} {% load bootstrap5 %}
+<!doctype html>
+<html lang="en">
+  <head>
+    {% bootstrap_css %} {% bootstrap_javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Chatroom Links</title>
+    <link rel="stylesheet" href="{% static 'chat/css/styles.css' %}" />
+  </head>
+  <body class="bg-more">
+    <div class="container mt-5">
+      <h3>Choose a Room</h3>
+      <hr />
+      <div class="row row-cols-1 row-cols-md-4 g-3">
+            {% for room in rooms %}
+            <div class="col">
+                <a href="{% url 'chatroom' room.name %}" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-capitalize"># {{ room.name }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+  </body>
+</html>
